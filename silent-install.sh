@@ -61,8 +61,8 @@ VPC_ID=$(aws ec2 create-vpc --cidr-block $CIDR --query Vpc.VpcId --out text)
 VPC_STATE=$(aws ec2 describe-vpcs --vpc-ids $VPC_ID --query Vpcs[].State --out text)
 echo [CREATED] VPC: $VPC_ID
 
-aws ec2 modify-vpc-attribute --vpc-id $VPC_ID --enable-dns-support true --out text
-aws ec2 modify-vpc-attribute --vpc-id $VPC_ID --enable-dns-hostnames true --out text
+aws ec2 modify-vpc-attribute --vpc-id $VPC_ID --enable-dns-support "{\"Value\":true}" --out text
+aws ec2 modify-vpc-attribute --vpc-id $VPC_ID --enable-dns-hostnames "{\"Value\":true}" --out text
 
 # waits for running state
 while [[ $VPC_STATE != "available" ]]; do 
